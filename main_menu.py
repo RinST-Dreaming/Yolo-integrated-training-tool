@@ -268,6 +268,9 @@ class Ui_MainWindow(object):
         self.actionChinese.setText(_translate("MainWindow", "中文"))
 
     def browse_workspace_directory_function(self):
+        self.task_onrunning_textBrowser.setText("设置工作区路径")
+        self.progressBar.setProperty("value", 0)
+
         """浏览并选择工作目录"""
         # 弹出目录选择对话框
         directory = QFileDialog.getExistingDirectory(
@@ -282,22 +285,38 @@ class Ui_MainWindow(object):
             # 将选择的目录路径设置到文本编辑框中
             self.workspace_textEdit.setPlainText(directory)
             self.information_textBrowser.insertPlainText(f"成功设置工作目录:{directory}\n")
+            self.progressBar.setProperty("value", 100)
 
     def subfolder_create_function(self):
+        self.task_onrunning_textBrowser.setText("创建工作区目录")
+        self.progressBar.setProperty("value", 0)
+
         if self.workspace_textEdit.toPlainText():
             if os.path.exists(self.workspace_textEdit.toPlainText()):
                 os.makedirs(self.workspace_textEdit.toPlainText()+"/train/images")
+                self.progressBar.setProperty("value", 10)
                 os.makedirs(self.workspace_textEdit.toPlainText()+"/train/labels")
+                self.progressBar.setProperty("value", 20)
                 os.makedirs(self.workspace_textEdit.toPlainText()+"/train/labels_xml")
+                self.progressBar.setProperty("value", 25)
                 os.makedirs(self.workspace_textEdit.toPlainText()+"/val/images")
+                self.progressBar.setProperty("value", 30)
                 os.makedirs(self.workspace_textEdit.toPlainText()+"/val/labels")
+                self.progressBar.setProperty("value", 40)
                 os.makedirs(self.workspace_textEdit.toPlainText()+"/val/labels_xml")
+                self.progressBar.setProperty("value", 50)
                 os.makedirs(self.workspace_textEdit.toPlainText()+"/test/images")
+                self.progressBar.setProperty("value", 60)
                 os.makedirs(self.workspace_textEdit.toPlainText()+"/test/labels")
+                self.progressBar.setProperty("value", 70)
                 os.makedirs(self.workspace_textEdit.toPlainText()+"/test/labels_xml")
+                self.progressBar.setProperty("value", 75)
                 os.makedirs(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images")
+                self.progressBar.setProperty("value", 80)
                 os.makedirs(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/labels")
+                self.progressBar.setProperty("value", 90)
                 os.makedirs(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/labels_xml")
+                self.progressBar.setProperty("value", 100)
                 self.information_textBrowser.insertPlainText(f"成功创建子文件夹\n")
             else:
                 self.information_textBrowser.insertPlainText(f"无效的工作目录\n")
@@ -305,6 +324,9 @@ class Ui_MainWindow(object):
             self.information_textBrowser.insertPlainText(f"在创建子文件夹前请先选择工作目录\n")
 
     def yaml_create_function(self):
+        self.task_onrunning_textBrowser.setText("创建yolo训练yaml配置文件")
+        self.progressBar.setProperty("value", 0)
+
         if self.workspace_textEdit.toPlainText():
             if os.path.exists(self.workspace_textEdit.toPlainText()):
                 if self.target_adding_textEdit.toPlainText():
@@ -316,9 +338,11 @@ class Ui_MainWindow(object):
                         f"nc: {len(str(self.target_adding_textEdit.toPlainText()).splitlines())}",
                         f"names: ['{names}']"
                     ]
+                    self.progressBar.setProperty("value", 50)
                     with open(self.workspace_textEdit.toPlainText()+"/dataset.yaml", 'w', encoding='utf-8') as file:
                         file.write('\n'.join(yaml_content))
                     self.information_textBrowser.insertPlainText(f"yaml文件创建成功\n")
+                    self.progressBar.setProperty("value", 100)
                 else:
                     self.information_textBrowser.insertPlainText(f"在创建yaml配置文件前,你需要先添加标注名,用回车隔开\n")
             else:
@@ -328,6 +352,8 @@ class Ui_MainWindow(object):
 
 
     def ramdom_classify_function(self):
+        self.task_onrunning_textBrowser.setText("对数据集进行随机分配")
+
         # 支持的图片扩展名
         image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.webp'}
 
@@ -390,6 +416,8 @@ class Ui_MainWindow(object):
         self.information_textBrowser.insertPlainText(f"文件随机分配命令执行完成\n")
 
     def HBB_to_txt_function(self):
+        self.task_onrunning_textBrowser.setText("转换水平HBB标注xml文件为txt文件")
+
         # 支持的图片扩展名
         image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.webp'}
 
@@ -416,6 +444,8 @@ class Ui_MainWindow(object):
             self.information_textBrowser.insertPlainText(f"无效的工作目录\n")
 
     def OBB_to_txt_function(self):
+        self.task_onrunning_textBrowser.setText("转换斜框OBB标注xml文件为txt文件")
+
         # 支持的图片扩展名
         image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.webp'}
 
@@ -444,6 +474,8 @@ class Ui_MainWindow(object):
             self.information_textBrowser.insertPlainText(f"无效的工作目录\n")
 
     def yolo_train_start_function(self):
+        self.task_onrunning_textBrowser.setText("进行yolo模型训练")
+
         # YOLO 训练命令
         cmd = f"yolo train model=yolov8n.pt data={self.workspace_textEdit.toPlainText()}/dataset.yaml epochs=50"
 
