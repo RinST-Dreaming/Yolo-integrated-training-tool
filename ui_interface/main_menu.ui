@@ -197,7 +197,7 @@
         </property>
         <widget class="QWidget" name="target_adding_tab">
          <attribute name="title">
-          <string>添加标注名</string>
+          <string>添加标注名(每行一个)</string>
          </attribute>
          <widget class="QTextEdit" name="target_adding_textEdit">
           <property name="geometry">
@@ -481,7 +481,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>启动yolo训练</string>
+           <string>启动yolo训练(优先采用训练命令高级设置)</string>
           </property>
          </widget>
          <widget class="QPushButton" name="yolo_train_basic_setting_pushButton">
