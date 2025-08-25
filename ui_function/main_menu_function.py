@@ -6,10 +6,12 @@ from ui_interface import yolo_train_command_setting
 from pathlib import Path
 from tools import xml_to_txt
 from tools import xml_convert_examine
+import sys
 import cv2
 import subprocess
 import random
 import os
+import threading
 
 class Ui_MainWindow_function(Ui_MainWindow):
     def setupfunction(self):
@@ -19,6 +21,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
         self.ramdom_classify_pushButton.clicked.connect(self.ramdom_classify_function)
         self.xml_to_txt_pushButton.clicked.connect(self.xml_to_txt_function)
         self.xml_convert_examine_pushButton.clicked.connect(self.xml_convert_examine_function)
+        self.rolabelimg_pushButton.clicked.connect(self.rolabelimg_function)
         self.yolo_train_start_pushButton.clicked.connect(self.yolo_train_start_function)
 
 
@@ -306,12 +309,23 @@ class Ui_MainWindow_function(Ui_MainWindow):
         else:
             self.information_textBrowser.insertPlainText(f"无效的工作目录\n")
 
+    def rolabelimg_function(self):
+        self.task_onrunning_textBrowser.setText("打开yolo模型标注软件")
+        
+        def rolabelimg_function_threading():
+            # 获取当前文件的完整路径
+            current_file = sys.argv[0]
+            # 获取文件所在目录
+            current_dir = os.path.dirname(current_file)
+            cmd=f"python {current_dir}/tools/roLabelImg-master/roLabelImg.py"
+            subprocess.run(cmd, shell=True)
+
+        threading.Thread(target=rolabelimg_function_threading).start()
+
     def yolo_train_start_function(self):
         self.task_onrunning_textBrowser.setText("进行yolo模型训练")
-
         # YOLO 训练命令
         cmd = f"yolo train model=yolov8n.pt data={self.workspace_textEdit.toPlainText()}/dataset.yaml epochs=50"
-
         # 执行命令
         subprocess.run(cmd, shell=True)
 
