@@ -1,4 +1,2 @@
-dataset.yaml
-tools/__pycache__/OBB_to_txt.cpython-311.pyc
-
-tools/__pycache__/HBB_to_txt.cpython-311.pyc
+test_wk_area/
+__pycache__/
