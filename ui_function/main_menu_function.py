@@ -1,8 +1,12 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
 from ui_interface.main_menu import Ui_MainWindow
+from . import yolo_train_basic_setting_function
+from ui_interface import yolo_train_command_setting
 from pathlib import Path
 from tools import xml_to_txt
+from tools import xml_convert_examine
+import cv2
 import subprocess
 import random
 import os
@@ -14,7 +18,9 @@ class Ui_MainWindow_function(Ui_MainWindow):
         self.yaml_create_pushButton.clicked.connect(self.yaml_create_function)
         self.ramdom_classify_pushButton.clicked.connect(self.ramdom_classify_function)
         self.xml_to_txt_pushButton.clicked.connect(self.xml_to_txt_function)
+        self.xml_convert_examine_pushButton.clicked.connect(self.xml_convert_examine_function)
         self.yolo_train_start_pushButton.clicked.connect(self.yolo_train_start_function)
+
 
     def browse_workspace_directory_function(self):
         self.task_onrunning_textBrowser.setText("设置工作区路径")
@@ -172,13 +178,12 @@ class Ui_MainWindow_function(Ui_MainWindow):
 
         if os.path.exists(self.workspace_textEdit.toPlainText()):
             if self.target_adding_textEdit.toPlainText():
-                
+
+                self.information_textBrowser.insertPlainText(f"开始进行files_waiting_for_classify文件夹内的xml标注转换\n")
                 for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images"):
                     image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/images/{image_file}").suffix
                     image_file_name = image_file[:-len(image_file_suffix)]
-
                     if(image_file_suffix in image_extensions):
-
                         if(os.path.exists(self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/labels_xml/{image_file_name}.xml")):
                             xml_to_txt.function(xml_path=self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/labels_xml/{image_file_name}.xml",
                                     txt_path=self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/labels/{image_file_name}.txt",
@@ -187,10 +192,117 @@ class Ui_MainWindow_function(Ui_MainWindow):
                             xml_to_txt.function(xml_path=None,
                                     txt_path=self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/labels/{image_file_name}.txt",
                                     classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines()))
+                            
+                self.information_textBrowser.insertPlainText(f"开始进行train文件夹内的xml标注转换\n")
+                for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/train/images"):
+                    image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/train/images/{image_file}").suffix
+                    image_file_name = image_file[:-len(image_file_suffix)]
+                    if(image_file_suffix in image_extensions):
+                        if(os.path.exists(self.workspace_textEdit.toPlainText()+f"/train/labels_xml/{image_file_name}.xml")):
+                            xml_to_txt.function(xml_path=self.workspace_textEdit.toPlainText()+f"/train/labels_xml/{image_file_name}.xml",
+                                    txt_path=self.workspace_textEdit.toPlainText()+f"/train/labels/{image_file_name}.txt",
+                                    classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines()))
+                        elif(not os.path.exists(self.workspace_textEdit.toPlainText()+f"/train/labels/{image_file_name}.txt")):
+                            xml_to_txt.function(xml_path=None,
+                                    txt_path=self.workspace_textEdit.toPlainText()+f"/train/labels/{image_file_name}.txt",
+                                    classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines()))
+                            
+                self.information_textBrowser.insertPlainText(f"开始进行val文件夹内的xml标注转换\n")
+                for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/val/images"):
+                    image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/val/images/{image_file}").suffix
+                    image_file_name = image_file[:-len(image_file_suffix)]
+                    if(image_file_suffix in image_extensions):
+                        if(os.path.exists(self.workspace_textEdit.toPlainText()+f"/val/labels_xml/{image_file_name}.xml")):
+                            xml_to_txt.function(xml_path=self.workspace_textEdit.toPlainText()+f"/val/labels_xml/{image_file_name}.xml",
+                                    txt_path=self.workspace_textEdit.toPlainText()+f"/val/labels/{image_file_name}.txt",
+                                    classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines()))
+                        elif(not os.path.exists(self.workspace_textEdit.toPlainText()+f"/val/labels/{image_file_name}.txt")):
+                            xml_to_txt.function(xml_path=None,
+                                    txt_path=self.workspace_textEdit.toPlainText()+f"/val/labels/{image_file_name}.txt",
+                                    classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines()))
+                            
+                self.information_textBrowser.insertPlainText(f"开始进行test文件夹内的xml标注转换\n")
+                for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/test/images"):
+                    image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/test/images/{image_file}").suffix
+                    image_file_name = image_file[:-len(image_file_suffix)]
+                    if(image_file_suffix in image_extensions):
+                        if(os.path.exists(self.workspace_textEdit.toPlainText()+f"/test/labels_xml/{image_file_name}.xml")):
+                            xml_to_txt.function(xml_path=self.workspace_textEdit.toPlainText()+f"/test/labels_xml/{image_file_name}.xml",
+                                    txt_path=self.workspace_textEdit.toPlainText()+f"/test/labels/{image_file_name}.txt",
+                                    classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines()))
+                        elif(not os.path.exists(self.workspace_textEdit.toPlainText()+f"/test/labels/{image_file_name}.txt")):
+                            xml_to_txt.function(xml_path=None,
+                                    txt_path=self.workspace_textEdit.toPlainText()+f"/test/labels/{image_file_name}.txt",
+                                    classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines()))
                 
-                self.information_textBrowser.insertPlainText(f"OBB_to_txt命令执行完成\n")
+                self.information_textBrowser.insertPlainText(f"xml_to_txt命令执行完成\n")
             else:
                 self.information_textBrowser.insertPlainText(f"在创建txt文件前,你需要先添加标注名,用回车隔开\n")
+        else:
+            self.information_textBrowser.insertPlainText(f"无效的工作目录\n")
+
+    def xml_convert_examine_function(self):
+        self.task_onrunning_textBrowser.setText("转换标注xml文件为txt文件")
+
+        # 支持的图片扩展名
+        image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.webp'}
+
+        if os.path.exists(self.workspace_textEdit.toPlainText()):
+
+            self.information_textBrowser.insertPlainText(f"开始进行files_waiting_for_classify文件夹内的图片标注检验\n")
+            for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images"):
+                image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/images/{image_file}").suffix
+                image_file_name = image_file[:-len(image_file_suffix)]
+                if(image_file_suffix in image_extensions):
+                    if(os.path.exists(self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/labels/{image_file_name}.txt")):
+                        if not xml_convert_examine.function(pic_path=self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/images/{image_file}",
+                                txt_path=self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/labels/{image_file_name}.txt",
+                                classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines())):
+                            break
+                    else:
+                        self.information_textBrowser.insertPlainText(f"{image_file_name}.txt文件不存在\n")
+
+            self.information_textBrowser.insertPlainText(f"开始进行train文件夹内的图片标注检验\n")
+            for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/train/images"):
+                image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/train/images/{image_file}").suffix
+                image_file_name = image_file[:-len(image_file_suffix)]
+                if(image_file_suffix in image_extensions):
+                    if(os.path.exists(self.workspace_textEdit.toPlainText()+f"/train/labels/{image_file_name}.txt")):
+                        if not xml_convert_examine.function(pic_path=self.workspace_textEdit.toPlainText()+f"/train/images/{image_file}",
+                                txt_path=self.workspace_textEdit.toPlainText()+f"/train/labels/{image_file_name}.txt",
+                                classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines())):
+                            break
+                    else:
+                        self.information_textBrowser.insertPlainText(f"{image_file_name}.txt文件不存在\n")
+
+            self.information_textBrowser.insertPlainText(f"开始进行val文件夹内的图片标注检验\n")
+            for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/val/images"):
+                image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/val/images/{image_file}").suffix
+                image_file_name = image_file[:-len(image_file_suffix)]
+                if(image_file_suffix in image_extensions):
+                    if(os.path.exists(self.workspace_textEdit.toPlainText()+f"/val/labels/{image_file_name}.txt")):
+                        if not xml_convert_examine.function(pic_path=self.workspace_textEdit.toPlainText()+f"/val",
+                                classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines())):
+                            break
+                    else:
+                        self.information_textBrowser.insertPlainText(f"{image_file_name}.txt文件不存在\n")
+
+            self.information_textBrowser.insertPlainText(f"开始进行test文件夹内的图片标注检验\n")
+            for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/test/images"):
+                image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/test/images/{image_file}").suffix
+                image_file_name = image_file[:-len(image_file_suffix)]
+                if(image_file_suffix in image_extensions):
+                    if(os.path.exists(self.workspace_textEdit.toPlainText()+f"/test/labels/{image_file_name}.txt")):
+                        if not xml_convert_examine.function(pic_path=self.workspace_textEdit.toPlainText()+f"/test/images/{image_file}",
+                                txt_path=self.workspace_textEdit.toPlainText()+f"/test/labels/{image_file_name}.txt",
+                                classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines())):
+                            break
+                    else:
+                        self.information_textBrowser.insertPlainText(f"{image_file_name}.txt文件不存在\n")
+            
+            self.information_textBrowser.insertPlainText(f"标注图片检验命令执行完成\n")
+            cv2.destroyAllWindows()
+
         else:
             self.information_textBrowser.insertPlainText(f"无效的工作目录\n")
 

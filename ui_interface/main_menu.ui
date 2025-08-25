@@ -323,7 +323,7 @@
          <string>xml转txt文件</string>
         </property>
        </widget>
-       <widget class="QLabel" name="xml_conver_examine_label">
+       <widget class="QLabel" name="xml_convert_examine_label">
         <property name="geometry">
          <rect>
           <x>30</x>

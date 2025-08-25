@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from ui_function.main_menu_function import Ui_MainWindow_function
 
 if __name__ == "__main__":
