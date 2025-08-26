@@ -2,7 +2,7 @@
 ## WARNING:This version is still in collaborative developing while a lot of new tools are waiting for improving.Please don't download.
   
 ## Introduction
-This is a YOLO neural network ensemble training tool, because when I usually use YOLO for training, I often encounter problems such as labeling, file conversion, setting configuration files, setting sample allocation ratios, and verifying various training tasks and results. Due to the scattered nature of each tool, I wanted to write an ensemble tool to facilitate the quick construction of the YOLO training workspace
+This is a Yolo integrated training tool, because when I usually use YOLO for training, I often encounter problems such as labeling, file conversion, setting configuration files, setting sample allocation ratios, and verifying various training tasks and results. Due to the scattered nature of each tool, I wanted to write an ensemble tool to facilitate the quick construction of the YOLO training workspace
   
 ## Quick Start
 
@@ -67,4 +67,4 @@ Training steps:
 13.  (Optional) Copy the "best. pt" file obtained from training to your working directory, click the "Start YOLO Training Results Verification" button, and manually verify the training effect of the model  
     
 # Acknowledgements and Copyright Statement
-This project uses [rolabelimg]（ https://github.com/cgvict/roLabelImg ）The tool is developed by [cgvit and wkkmike] and follows the [MIT License] license. 
+This project uses [rolabelimg](https://github.com/cgvict/roLabelImg)The tool is developed by [cgvit and wkkmike] and follows the [MIT License] license. 
