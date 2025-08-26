@@ -72,30 +72,54 @@ class Ui_MainWindow_function(Ui_MainWindow):
 
         if self.workspace_textEdit.toPlainText():
             if os.path.exists(self.workspace_textEdit.toPlainText()):
-                os.makedirs(self.workspace_textEdit.toPlainText()+"/train/images")
+                if(not os.path.exists(self.workspace_textEdit.toPlainText()+"/train/images")):
+                    os.makedirs(self.workspace_textEdit.toPlainText()+"/train/images")
                 self.progressBar.setProperty("value", 10)
-                os.makedirs(self.workspace_textEdit.toPlainText()+"/train/labels")
+
+                if(not os.path.exists(self.workspace_textEdit.toPlainText()+"/train/labels")):
+                    os.makedirs(self.workspace_textEdit.toPlainText()+"/train/labels")
                 self.progressBar.setProperty("value", 20)
-                os.makedirs(self.workspace_textEdit.toPlainText()+"/train/labels_xml")
+
+                if(not os.path.exists(self.workspace_textEdit.toPlainText()+"/train/labels_xml")):
+                    os.makedirs(self.workspace_textEdit.toPlainText()+"/train/labels_xml")
                 self.progressBar.setProperty("value", 25)
-                os.makedirs(self.workspace_textEdit.toPlainText()+"/val/images")
+
+                if(not os.path.exists(self.workspace_textEdit.toPlainText()+"/val/images")):
+                    os.makedirs(self.workspace_textEdit.toPlainText()+"/val/images")
                 self.progressBar.setProperty("value", 30)
-                os.makedirs(self.workspace_textEdit.toPlainText()+"/val/labels")
+
+                if(not os.path.exists(self.workspace_textEdit.toPlainText()+"/val/labels")):
+                    os.makedirs(self.workspace_textEdit.toPlainText()+"/val/labels")
                 self.progressBar.setProperty("value", 40)
-                os.makedirs(self.workspace_textEdit.toPlainText()+"/val/labels_xml")
+
+                if(not os.path.exists(self.workspace_textEdit.toPlainText()+"/val/labels_xml")):
+                    os.makedirs(self.workspace_textEdit.toPlainText()+"/val/labels_xml")
                 self.progressBar.setProperty("value", 50)
-                os.makedirs(self.workspace_textEdit.toPlainText()+"/test/images")
+
+                if(not os.path.exists(self.workspace_textEdit.toPlainText()+"/test/images")):
+                    os.makedirs(self.workspace_textEdit.toPlainText()+"/test/images")
                 self.progressBar.setProperty("value", 60)
-                os.makedirs(self.workspace_textEdit.toPlainText()+"/test/labels")
+
+                if(not os.path.exists(self.workspace_textEdit.toPlainText()+"/test/labels")):
+                    os.makedirs(self.workspace_textEdit.toPlainText()+"/test/labels")
                 self.progressBar.setProperty("value", 70)
-                os.makedirs(self.workspace_textEdit.toPlainText()+"/test/labels_xml")
+
+                if(not os.path.exists(self.workspace_textEdit.toPlainText()+"/test/labels_xml")):
+                    os.makedirs(self.workspace_textEdit.toPlainText()+"/test/labels_xml")
                 self.progressBar.setProperty("value", 75)
-                os.makedirs(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images")
+
+                if(not os.path.exists(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images")):
+                    os.makedirs(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images")
                 self.progressBar.setProperty("value", 80)
-                os.makedirs(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/labels")
+
+                if(not os.path.exists(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/labels")):
+                    os.makedirs(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/labels")
                 self.progressBar.setProperty("value", 90)
-                os.makedirs(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/labels_xml")
+
+                if(not os.path.exists(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/labels_xml")):
+                    os.makedirs(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/labels_xml")
                 self.progressBar.setProperty("value", 100)
+
                 self.information_update(f"成功创建子文件夹\n")
             else:
                 self.information_update(f"无效的工作目录\n")
@@ -133,6 +157,8 @@ class Ui_MainWindow_function(Ui_MainWindow):
     def ramdom_classify_function(self):
         self.task_onrunning_textBrowser.setText("对数据集进行随机分配")
         self.progressBar.setProperty("value", 0)
+        count=0
+        all_count=len(os.listdir(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images"))
 
         # 支持的图片扩展名
         image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.webp'}
@@ -148,7 +174,6 @@ class Ui_MainWindow_function(Ui_MainWindow):
         divide_line_1 = rand_value_1/100
         divide_line_2 = (rand_value_1+rand_value_2)/100
         
-        self.progressBar.setProperty("value", 25)
 
         if os.path.exists(self.workspace_textEdit.toPlainText()):
             if os.path.exists(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify"):
@@ -188,6 +213,9 @@ class Ui_MainWindow_function(Ui_MainWindow):
                             if os.path.exists(self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/labels_xml/{image_file_name}.xml"):
                                 Path(self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/labels_xml/{image_file_name}.xml").rename(
                                     self.workspace_textEdit.toPlainText()+f"/test/labels_xml/{image_file_name}.xml")
+                                
+                    count+=1
+                    self.progressBar.setProperty("value", count/all_count*100)
             else:
                 self.information_update(f"未检测到子文件夹\n")
                 return
@@ -201,6 +229,11 @@ class Ui_MainWindow_function(Ui_MainWindow):
     def xml_to_txt_function(self):
         self.task_onrunning_textBrowser.setText("转换标注xml文件为txt文件")
         self.progressBar.setProperty("value", 0)
+        count=0
+        all_count=len(os.listdir(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images")+
+                      os.listdir(self.workspace_textEdit.toPlainText()+"/train/images")+
+                      os.listdir(self.workspace_textEdit.toPlainText()+"/val/images")+
+                      os.listdir(self.workspace_textEdit.toPlainText()+"/test/images"))
 
         # 支持的图片扩展名
         image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.webp'}
@@ -221,6 +254,9 @@ class Ui_MainWindow_function(Ui_MainWindow):
                             xml_to_txt.function(xml_path=None,
                                     txt_path=self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/labels/{image_file_name}.txt",
                                     classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines()))
+                    
+                    count+=1
+                    self.progressBar.setProperty("value", count/all_count*100)
                             
                 self.information_update(f"开始进行train文件夹内的xml标注转换\n")
                 for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/train/images"):
@@ -236,6 +272,9 @@ class Ui_MainWindow_function(Ui_MainWindow):
                                     txt_path=self.workspace_textEdit.toPlainText()+f"/train/labels/{image_file_name}.txt",
                                     classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines()))
                             
+                    count+=1
+                    self.progressBar.setProperty("value", count/all_count*100)
+                            
                 self.information_update(f"开始进行val文件夹内的xml标注转换\n")
                 for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/val/images"):
                     image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/val/images/{image_file}").suffix
@@ -249,6 +288,8 @@ class Ui_MainWindow_function(Ui_MainWindow):
                             xml_to_txt.function(xml_path=None,
                                     txt_path=self.workspace_textEdit.toPlainText()+f"/val/labels/{image_file_name}.txt",
                                     classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines()))
+                    count+=1
+                    self.progressBar.setProperty("value", count/all_count*100)
                             
                 self.information_update(f"开始进行test文件夹内的xml标注转换\n")
                 for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/test/images"):
@@ -263,6 +304,9 @@ class Ui_MainWindow_function(Ui_MainWindow):
                             xml_to_txt.function(xml_path=None,
                                     txt_path=self.workspace_textEdit.toPlainText()+f"/test/labels/{image_file_name}.txt",
                                     classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines()))
+                            
+                    count+=1
+                    self.progressBar.setProperty("value", count/all_count*100)
                 
                 self.information_update(f"xml_to_txt命令执行完成\n")
                 self.progressBar.setProperty("value", 100)
@@ -272,8 +316,13 @@ class Ui_MainWindow_function(Ui_MainWindow):
             self.information_update(f"无效的工作目录\n")
 
     def xml_convert_examine_function(self):
-        self.task_onrunning_textBrowser.setText("转换标注xml文件为txt文件")
+        self.task_onrunning_textBrowser.setText("进行txt文件转换正确性检验")
         self.progressBar.setProperty("value", 0)
+        count=0
+        all_count=len(os.listdir(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images")+
+                      os.listdir(self.workspace_textEdit.toPlainText()+"/train/images")+
+                      os.listdir(self.workspace_textEdit.toPlainText()+"/val/images")+
+                      os.listdir(self.workspace_textEdit.toPlainText()+"/test/images"))
 
         # 支持的图片扩展名
         image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.webp'}
@@ -295,6 +344,9 @@ class Ui_MainWindow_function(Ui_MainWindow):
                             break
                     else:
                         self.information_update(f"{image_file_name}.txt文件不存在\n")
+                
+                count+=1
+                self.progressBar.setProperty("value", count/all_count*100)
 
             self.information_update(f"开始进行train文件夹内的图片标注检验\n")
             for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/train/images"):
@@ -309,6 +361,9 @@ class Ui_MainWindow_function(Ui_MainWindow):
                     else:
                         self.information_update(f"{image_file_name}.txt文件不存在\n")
 
+                count+=1
+                self.progressBar.setProperty("value", count/all_count*100)
+
             self.information_update(f"开始进行val文件夹内的图片标注检验\n")
             for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/val/images"):
                 image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/val/images/{image_file}").suffix
@@ -322,6 +377,9 @@ class Ui_MainWindow_function(Ui_MainWindow):
                     else:
                         self.information_update(f"{image_file_name}.txt文件不存在\n")
 
+                count+=1
+                self.progressBar.setProperty("value", count/all_count*100)
+
             self.information_update(f"开始进行test文件夹内的图片标注检验\n")
             for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/test/images"):
                 image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/test/images/{image_file}").suffix
@@ -334,6 +392,9 @@ class Ui_MainWindow_function(Ui_MainWindow):
                             break
                     else:
                         self.information_update(f"{image_file_name}.txt文件不存在\n")
+
+                count+=1
+                self.progressBar.setProperty("value", count/all_count*100)
             
             self.information_update(f"标注图片检验命令执行完成\n")
             self.progressBar.setProperty("value", 100)

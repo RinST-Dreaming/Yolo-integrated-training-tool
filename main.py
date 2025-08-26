@@ -13,33 +13,3 @@ if __name__ == "__main__":
     ui.setupfunction(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-
-
-'''
-if __name__ == "__main__":
-    import sys
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
-    app = QtWidgets.QApplication(sys.argv)
-    QWidget = QtWidgets.QWidget()
-    ui = Ui_yolo_train_basic_setting_Form_function()
-    ui.setupUi(QWidget)
-    ui.setupfunction(QWidget)
-    QWidget.show()
-    sys.exit(app.exec_())
-'''
-
-
-'''
-if __name__ == "__main__":
-    import sys
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
-    app = QtWidgets.QApplication(sys.argv)
-    QWidget = QtWidgets.QWidget()
-    ui = Ui_yolo_train_command_setting_Form_function()
-    ui.setupUi(QWidget)
-    ui.setupfunction(QWidget)
-    QWidget.show()
-    sys.exit(app.exec_())
-'''
