@@ -18,6 +18,7 @@ from tools import xml_convert_examine
 class ProgressSignal(QtCore.QObject):
     message_updated = QtCore.pyqtSignal(str)   # 消息文本
     progress_updated = QtCore.pyqtSignal(int)  # 进度百分比
+    train_button_status = QtCore.pyqtSignal(bool)
     
 
 class Ui_MainWindow_function(Ui_MainWindow):
@@ -49,6 +50,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
         self.progress_signal = ProgressSignal()
         self.progress_signal.message_updated.connect(self.task_onrunning_textBrowser.setPlainText)
         self.progress_signal.progress_updated.connect(self.progress_update)
+        self.progress_signal.train_button_status.connect(self.train_button_status_update)
 
 
     def information_update(self,information):
@@ -58,6 +60,10 @@ class Ui_MainWindow_function(Ui_MainWindow):
 
     def progress_update(self,progress):
         self.progressBar.setProperty("value", progress)
+
+    def train_button_status_update(self,status):
+        self.yolo_train_start_pushButton.setEnabled(status)
+        self.yolo_train_start_pushButton.setText("yolo模型训练完成(√)")
 
     def browse_workspace_directory_function(self):
         self.task_onrunning_textBrowser.setText("设置工作区路径")
@@ -440,6 +446,8 @@ class Ui_MainWindow_function(Ui_MainWindow):
     def yolo_train_start_function(self):
         self.task_onrunning_textBrowser.setText("进行yolo模型训练")
         self.progressBar.setProperty("value", 0)
+        self.yolo_train_start_pushButton.setEnabled(False)
+        self.yolo_train_start_pushButton.setText("正在处理......")
 
         cmd=""
 
@@ -474,6 +482,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
             while True:
                 output = process.stdout.readline()
                 self.progress_signal.message_updated.emit(output)
+                print(output)
 
                 if output == '' and process.poll() is not None:
                     break
@@ -497,6 +506,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
 
             self.progress_signal.message_updated.emit("yolo模型训练完成")
             self.progress_signal.progress_updated.emit(int(100))
+            self.progress_signal.train_button_status.emit(True)
             process.poll()
 
         threading.Thread(target=yolo_train_start_function_threading, args=(cmd,)).start()
@@ -522,7 +532,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
             self.progressBar.setProperty("value", 100)
             cv2.destroyAllWindows()
         else:
-            self.information_update("请先将best.pt文件放到工作目录中")
+            self.information_update("请先将best.pt文件放到工作目录中\n")
 
 
 
