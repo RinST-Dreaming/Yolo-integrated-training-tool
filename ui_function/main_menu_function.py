@@ -15,6 +15,11 @@ from ui_function.yolo_train_command_setting_function import Ui_yolo_train_comman
 from tools import xml_to_txt
 from tools import xml_convert_examine
 
+class ProgressSignal(QtCore.QObject):
+    message_updated = QtCore.pyqtSignal(str)   # 消息文本
+    progress_updated = QtCore.pyqtSignal(int)  # 进度百分比
+    
+
 class Ui_MainWindow_function(Ui_MainWindow):
     def setupfunction(self, MainWindow):
         self.browse_pushButton.clicked.connect(self.browse_workspace_directory_function)
@@ -41,10 +46,18 @@ class Ui_MainWindow_function(Ui_MainWindow):
 
         self.yolo_train_cmd=self.yolo_train_command_setting_ui.train_command_textEdit.toPlainText()
 
+        self.progress_signal = ProgressSignal()
+        self.progress_signal.message_updated.connect(self.task_onrunning_textBrowser.setPlainText)
+        self.progress_signal.progress_updated.connect(self.progress_update)
+
+
     def information_update(self,information):
         self.information_textBrowser.moveCursor(QtGui.QTextCursor.End)
         self.information_textBrowser.insertPlainText(information)
         self.information_textBrowser.ensureCursorVisible()
+
+    def progress_update(self,progress):
+        self.progressBar.setProperty("value", progress)
 
     def browse_workspace_directory_function(self):
         self.task_onrunning_textBrowser.setText("设置工作区路径")
@@ -428,22 +441,65 @@ class Ui_MainWindow_function(Ui_MainWindow):
         self.task_onrunning_textBrowser.setText("进行yolo模型训练")
         self.progressBar.setProperty("value", 0)
 
+        cmd=""
+
         if(self.yolo_train_command_setting_ui.train_command_textEdit.toPlainText()):
             self.task_onrunning_textBrowser.setText("采用高级命令进行训练")
+            cmd=self.yolo_train_command_setting_ui.train_command_textEdit.toPlainText()
 
-            def yolo_train_start_function_threading():
-                cmd=self.yolo_train_command_setting_ui.train_command_textEdit.toPlainText()
-                subprocess.run(cmd, shell=True)
-
-            threading.Thread(target=yolo_train_start_function_threading).start()
         else:
             self.task_onrunning_textBrowser.setText("采用基础设置进行训练")
+            cmd = (f"yolo train model={self.yolo_train_basic_setting_ui.train_model_comboBox.currentText()} "+
+                    f"data={self.workspace_textEdit.toPlainText()}/dataset.yaml "+
+                    f"epochs={self.yolo_train_basic_setting_ui.train_epochs_comboBox.currentText()} "+
+                    f"patience={self.yolo_train_basic_setting_ui.train_patience_comboBox.currentText()} "+
+                    f"device={self.yolo_train_basic_setting_ui.train_device_comboBox.currentText()} "+
+                    f"task={self.yolo_train_basic_setting_ui.train_task_comboBox.currentText()} "
+                    )
+            
+        def yolo_train_start_function_threading(cmd):
+            # 启动子进程并捕获输出
+            process = subprocess.Popen(
+                cmd,
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                universal_newlines=True,
+                encoding='utf-8',  # 明确指定编码
+                errors='replace',  # 遇到无法解码的字符时替换为问号
+                bufsize=1  # 行缓冲
+            )
 
-            def yolo_train_start_function_threading():
-                cmd = f"yolo train model={self.yolo_train_basic_setting_ui.train_model_comboBox.currentText()} data={self.workspace_textEdit.toPlainText()}/dataset.yaml epochs={self.yolo_train_basic_setting_ui.train_epochs_comboBox.currentText()} patience={self.yolo_train_basic_setting_ui.train_patience_comboBox.currentText()} device={self.yolo_train_basic_setting_ui.train_device_comboBox.currentText()} task={self.yolo_train_basic_setting_ui.train_task_comboBox.currentText()}"
-                subprocess.run(cmd, shell=True)
+            training_start = False
+            while True:
+                output = process.stdout.readline()
+                self.progress_signal.message_updated.emit(output)
 
-            threading.Thread(target=yolo_train_start_function_threading).start()
+                if output == '' and process.poll() is not None:
+                    break
+                if output:
+                    # 解析进度（匹配Epoch信息）
+                    if "Epoch" in output:
+                        training_start=True
+
+                    if "/" in output and training_start:
+                        parts = output.split()
+                        for part in parts:
+                            if "/" in part:
+                                try:
+                                    current, total = part.split("/")
+                                    progress = int(current) / int(total) * 100
+                                    if(progress!=100):
+                                        self.progress_signal.progress_updated.emit(int(progress))
+                                    break
+                                except:
+                                    pass
+
+            self.progress_signal.message_updated.emit("yolo模型训练完成")
+            self.progress_signal.progress_updated.emit(int(100))
+            process.poll()
+
+        threading.Thread(target=yolo_train_start_function_threading, args=(cmd,)).start()
     
     def yolo_test_start_function(self):
         self.task_onrunning_textBrowser.setText("进行yolo模型检验\n")
