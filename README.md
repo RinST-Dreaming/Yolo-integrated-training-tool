@@ -1,4 +1,4 @@
-# Version：Ver-1.0.0  
+# Yolo-integrated-training-tool：Ver-1.0.0  
 ## WARNING:This version is still in collaborative developing while a lot of new tools are waiting for improving.Please don't download.
   
 ## Introduction
