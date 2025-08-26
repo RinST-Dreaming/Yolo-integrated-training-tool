@@ -39,7 +39,7 @@ def function(pic_path,txt_path,classnames):
                 cv2.circle(image, point, 3, (0, 0, 255), -1)
             
             # 添加类别标签
-            class_name = classnames[class_id] if class_id < len(classnames) else f"Class_{class_id}"
+            class_name = classnames[class_id] if(class_id < len(classnames) and class_id>=0) else f"Class_{class_id}"
             cv2.putText(image, class_name, pixel_points[0], 
                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
     

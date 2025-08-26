@@ -1,2 +1,7 @@
 test_wk_area/
 __pycache__/
+runs/
+yolov8n.pt
+yolov8n-obb.pt
+yolo11n.pt
+yolo11n-obb.pt

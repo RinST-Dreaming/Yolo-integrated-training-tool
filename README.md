@@ -1,17 +1,70 @@
-## 版本：Ver-0.0.2
-这是自己的第一个开源项目，可能还有很多地方不太成熟
+# Version：Ver-1.0.0  
+## WARNING:This version is still in collaborative developing while a lot of new tools are waiting for improving.Please don't download.
+  
+## Introduction
+This is a Yolo integrated training tool, because when I usually use YOLO for training, I often encounter problems such as labeling, file conversion, setting configuration files, setting sample allocation ratios, and verifying various training tasks and results. Due to the scattered nature of each tool, I wanted to write an ensemble tool to facilitate the quick construction of the YOLO training workspace
+  
+## Quick Start
 
-## 简介
-这是一个yolo神经网络集成训练工具，因为自己平常用yolo进行训练时总是会遇见一些标注、文件转换、设置配置文件、设置样本分配比例以及各种不同的训练任务与训练成果验证的问题，由于各个工具过于分散了，所以想着写一个集成的工具便于快速完成yolo训练工作区的搭建
+### Environment
 
-## 更新日志：
-2025.08.25-Ver0.0.2
-把主要功能都完成了，合并了HBB和OBB标注的转换，新增了robelimg标注软件，标注检验功能，yolo模型命令配置与yolo模型训练功能，yolo模型训练结果检测功能，现在主要开始进行软件的公开测试来修复可能遇见的bug
-代码编写和更新的可能过于急迫，导致很多界面美化以及代码的介绍甚至是这个README文件还没有很好的完善，这些将在下一个版本中进行进一步的补充
+python=3.9~3.11  
+pytorch  
+ultralytics  
+PyQt5  
 
-2025.08.24-Ver0.0.1
-第一次上传自己的代码，目前代码还是一个半成品，提前测试一下github的仓库功能。下载代码后运行main_menu.py即可打开这个集成小工具，当前可以实现创建工作区、创建工作目录、创建配置文件、添加模型名称、设置样本分配比例、xml标注文件转yolo训练可识别的txt文件，启动yolo训练的功能。
-更加详细的教程会在后续代码不断完善后进行加入，如果您对这个项目感兴趣，也可以进行进一步的开发。
+### Installation
 
-## 致谢与版权声明
-本项目使用了 [rolabelimg](https://github.com/cgvict/roLabelImg) 工具，该工具由 [cgvict 和 wkkmike] 开发，遵循 [MIT License] 许可证。
+Method 1: Use Git cloning
+
+Windows/Linux/Mac: Enter the following command:  
+```cmd
+git clone  https://github.com/RinST-Dreaming/Yolo-integrated-training-tool.git
+```  
+  
+Method 2: Download the source code. zip file directly from the main page
+### Usage method
+Before use, please ensure that you have configured the YOLO training environment!!!
+
+Startup:   
+Simply open the source code folder and run the main.exe file to see the software interface
+  
+Training steps:  
+
+1. Create a folder locally, which is the working directory for training your YOLO model  
+   
+2. Click the "Browse" button on the right side of the workspace to find the folder you created  
+   
+3. Click the "Create subfolders in workspace" button to create folders with different functions
+- Files_waiting_for_classify: Store all your dataset images and annotation files, and wait for them to be randomly assigned to three other folders
+- Train: Store the training dataset for YOLO
+- Val: Store YOLO's validation dataset
+- Test: Store the dataset for manual validation after training the YOLO model
+
+4. Copy all the datasets you are preparing to train into the "files_waiting_for_classify" folder and classify them into folders inside the "files_waiting_for_classify" folder according to the following rules:
+- Images: Store image data
+- Labels: storing txt files for annotations
+- Labels-xml: storing annotated XML files
+  
+5. If your image has not been annotated with data yet, click the "rolabelimg" button to start the "rolabelimg" annotation tool and annotate the dataset. The official website and tutorial are as follows: [rolabelimg](https://github.com/cgvict/roLabelImg)  
+   
+6. Find the "Add Annotation Name" window on the right and enter the model name you annotated, one on each line
+   
+7. Click the "Create dataset. yaml" button to create a configuration file
+   
+8. Click the "Randomly Classify Images" button to allocate the "files_waiting_for_classify" folder to the other three categories according to a certain proportion (the allocation ratio can be configured in the right window)
+   
+9.  Click the "XML_to-txt" button to convert the XML file annotated with Rolabelimg into a TXT file that YOLO can recognize
+    
+10. (Optional) Click on the "XML_Cvert_amine" button, manually check if the annotation conversion is correct, press any key to switch to the next one, and press the "q" key to exit
+    
+11. Configure YOLO training commands. If you are new to YOLO model training, it is recommended to click on "YOLO Training Basic Settings", where you can find some pre-set training parameters; If you want to customize training commands, you can click on "YOLO Training Command Advanced Settings". If the internal content of this setting is left blank, it will default to "Training Basic Settings"
+    
+12. Click the "Start YOLO Training" button and wait for the training to complete
+    
+------Waiting for the training to end, congratulations on successfully completing a YOLO model training------
+
+13.  (Optional) Copy the "best. pt" file obtained from training to your working directory, click the "Start YOLO Training Results Verification" button, and manually verify the training effect of the model  
+    
+# Acknowledgements and Copyright Statement
+This project uses [rolabelimg](https://github.com/cgvict/roLabelImg)The tool is developed by [cgvit and wkkmike] and follows the [MIT License] license. 
