@@ -1,4 +1,9 @@
 # 更新日志：  
+## 2025.08.27-Ver1.0.0  
+### RinST-Dreaming:  
+修复了没有选择工作目录时all_count的报错  
+合并且优化了翻译代码
+
 ## 2025.08.26-Ver1.0.0  
 ### 从该版本开始正式进入协作模式（RinST-Dreaming && ShenFix）
 ### RinST-Dreaming:  

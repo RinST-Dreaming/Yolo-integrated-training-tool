@@ -44,10 +44,10 @@
        <widget class="QLabel" name="title_label">
         <property name="geometry">
          <rect>
-          <x>60</x>
-          <y>40</y>
-          <width>291</width>
-          <height>41</height>
+          <x>30</x>
+          <y>20</y>
+          <width>331</width>
+          <height>91</height>
          </rect>
         </property>
         <property name="font">
@@ -73,14 +73,14 @@
        <widget class="QLabel" name="maker_label">
         <property name="geometry">
          <rect>
-          <x>250</x>
-          <y>80</y>
-          <width>81</width>
-          <height>16</height>
+          <x>190</x>
+          <y>90</y>
+          <width>141</width>
+          <height>20</height>
          </rect>
         </property>
         <property name="text">
-         <string>——by:rinst</string>
+         <string>——by:rinst &amp;&amp; shenfix</string>
         </property>
        </widget>
       </widget>
@@ -117,7 +117,7 @@
          <rect>
           <x>90</x>
           <y>10</y>
-          <width>281</width>
+          <width>271</width>
           <height>31</height>
          </rect>
         </property>
@@ -134,9 +134,9 @@
        <widget class="QPushButton" name="browse_pushButton">
         <property name="geometry">
          <rect>
-          <x>380</x>
+          <x>370</x>
           <y>10</y>
-          <width>41</width>
+          <width>51</width>
           <height>31</height>
          </rect>
         </property>
@@ -315,7 +315,7 @@
          <rect>
           <x>20</x>
           <y>20</y>
-          <width>71</width>
+          <width>141</width>
           <height>16</height>
          </rect>
         </property>
@@ -326,10 +326,10 @@
        <widget class="QLabel" name="xml_convert_examine_label">
         <property name="geometry">
          <rect>
-          <x>30</x>
+          <x>20</x>
           <y>60</y>
-          <width>61</width>
-          <height>20</height>
+          <width>141</width>
+          <height>16</height>
          </rect>
         </property>
         <property name="text">
@@ -379,9 +379,9 @@
         <property name="geometry">
          <rect>
           <x>430</x>
-          <y>40</y>
+          <y>25</y>
           <width>81</width>
-          <height>16</height>
+          <height>51</height>
          </rect>
         </property>
         <property name="text">
