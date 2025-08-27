@@ -63,17 +63,17 @@ class Ui_MainWindow_function(Ui_MainWindow):
 
     def train_button_status_update(self,status):
         self.yolo_train_start_pushButton.setEnabled(status)
-        self.yolo_train_start_pushButton.setText("yolo模型训练完成(√)")
+        self.yolo_train_start_pushButton.setText(self.tr("yolo模型训练完成(√)"))
 
     def browse_workspace_directory_function(self):
-        self.task_onrunning_textBrowser.setText("设置工作区路径")
+        self.task_onrunning_textBrowser.setText(self.tr("设置工作区路径"))
         self.progressBar.setProperty("value", 0)
 
         """浏览并选择工作目录"""
         # 弹出目录选择对话框
         directory = QFileDialog.getExistingDirectory(
             None,  # 父窗口
-            "选择工作目录",  # 对话框标题
+            self.tr("选择工作目录"),  # 对话框标题
             "",  # 默认起始目录（空字符串表示当前目录）
             QFileDialog.ShowDirsOnly  # 只显示目录
         )
@@ -82,11 +82,11 @@ class Ui_MainWindow_function(Ui_MainWindow):
         if directory:
             # 将选择的目录路径设置到文本编辑框中
             self.workspace_textEdit.setPlainText(directory)
-            self.information_update(f"成功设置工作目录:{directory}\n")
+            self.information_update(self.tr("成功设置工作目录:") + f"{directory}\n")
             self.progressBar.setProperty("value", 100)
 
     def subfolder_create_function(self):
-        self.task_onrunning_textBrowser.setText("创建工作区目录")
+        self.task_onrunning_textBrowser.setText(self.tr("创建工作区目录"))
         self.progressBar.setProperty("value", 0)
 
         if self.workspace_textEdit.toPlainText():
@@ -139,14 +139,14 @@ class Ui_MainWindow_function(Ui_MainWindow):
                     os.makedirs(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/labels_xml")
                 self.progressBar.setProperty("value", 100)
 
-                self.information_update(f"成功创建子文件夹\n")
+                self.information_update(self.tr("成功创建子文件夹\n"))
             else:
-                self.information_update(f"无效的工作目录\n")
+                self.information_update(self.tr("无效的工作目录\n"))
         else:
-            self.information_update(f"在创建子文件夹前请先选择工作目录\n")
+            self.information_update(self.tr("在创建子文件夹前请先选择工作目录\n"))
 
     def yaml_create_function(self):
-        self.task_onrunning_textBrowser.setText("创建yolo训练yaml配置文件")
+        self.task_onrunning_textBrowser.setText(self.tr("创建yolo训练yaml配置文件"))
         self.progressBar.setProperty("value", 0)
 
         if self.workspace_textEdit.toPlainText():
@@ -163,18 +163,18 @@ class Ui_MainWindow_function(Ui_MainWindow):
                     self.progressBar.setProperty("value", 50)
                     with open(self.workspace_textEdit.toPlainText()+"/dataset.yaml", 'w', encoding='utf-8') as file:
                         file.write('\n'.join(yaml_content))
-                    self.information_update(f"yaml文件创建成功\n")
+                    self.information_update(self.tr("yaml文件创建成功\n"))
                     self.progressBar.setProperty("value", 100)
                 else:
-                    self.information_update(f"在创建yaml配置文件前,你需要先添加标注名,用回车隔开\n")
+                    self.information_update(self.tr("在创建yaml配置文件前,你需要先添加标注名,用回车隔开\n"))
             else:
-                self.information_update(f"无效的工作目录\n")
+                self.information_update(self.tr("无效的工作目录\n"))
         else:
-            self.information_update(f"在创建yaml文件前请先选择工作目录\n")
+            self.information_update(self.tr("在创建yaml文件前请先选择工作目录\n"))
 
 
     def ramdom_classify_function(self):
-        self.task_onrunning_textBrowser.setText("对数据集进行随机分配")
+        self.task_onrunning_textBrowser.setText(self.tr("对数据集进行随机分配"))
         self.progressBar.setProperty("value", 0)
         count=0
         all_count=len(os.listdir(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images"))
@@ -187,7 +187,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
         rand_value_3 = int(self.classify_test_spinBox.text())
         
         if(rand_value_1 + rand_value_2 + rand_value_3 != 100):
-            self.information_update(f"无效的随机分配概率值,三个值的和不为100\n")
+            self.information_update(self.tr("无效的随机分配概率值,三个值的和不为100\n"))
             return
 
         divide_line_1 = rand_value_1/100
@@ -236,17 +236,17 @@ class Ui_MainWindow_function(Ui_MainWindow):
                     count+=1
                     self.progressBar.setProperty("value", count/all_count*100)
             else:
-                self.information_update(f"未检测到子文件夹\n")
+                self.information_update(self.tr("未检测到子文件夹\n"))
                 return
         else:
-            self.information_update(f"无效的工作目录\n")
+            self.information_update(self.tr("无效的工作目录\n"))
             return
         
-        self.information_update(f"文件随机分配命令执行完成\n")
+        self.information_update(self.tr("文件随机分配命令执行完成\n"))
         self.progressBar.setProperty("value", 100)
 
     def xml_to_txt_function(self):
-        self.task_onrunning_textBrowser.setText("转换标注xml文件为txt文件")
+        self.task_onrunning_textBrowser.setText(self.tr("转换标注xml文件为txt文件"))
         self.progressBar.setProperty("value", 0)
         count=0
         all_count=len(os.listdir(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images")+
@@ -260,7 +260,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
         if os.path.exists(self.workspace_textEdit.toPlainText()):
             if self.target_adding_textEdit.toPlainText():
 
-                self.information_update(f"开始进行files_waiting_for_classify文件夹内的xml标注转换\n")
+                self.information_update(self.tr("开始进行files_waiting_for_classify文件夹内的xml标注转换\n"))
                 for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images"):
                     image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/images/{image_file}").suffix
                     image_file_name = image_file[:-len(image_file_suffix)]
@@ -277,7 +277,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
                     count+=1
                     self.progressBar.setProperty("value", count/all_count*100)
                             
-                self.information_update(f"开始进行train文件夹内的xml标注转换\n")
+                self.information_update(self.tr("开始进行train文件夹内的xml标注转换\n"))
                 for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/train/images"):
                     image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/train/images/{image_file}").suffix
                     image_file_name = image_file[:-len(image_file_suffix)]
@@ -294,7 +294,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
                     count+=1
                     self.progressBar.setProperty("value", count/all_count*100)
                             
-                self.information_update(f"开始进行val文件夹内的xml标注转换\n")
+                self.information_update(self.tr("开始进行val文件夹内的xml标注转换\n"))
                 for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/val/images"):
                     image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/val/images/{image_file}").suffix
                     image_file_name = image_file[:-len(image_file_suffix)]
@@ -310,7 +310,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
                     count+=1
                     self.progressBar.setProperty("value", count/all_count*100)
                             
-                self.information_update(f"开始进行test文件夹内的xml标注转换\n")
+                self.information_update(self.tr("开始进行test文件夹内的xml标注转换\n"))
                 for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/test/images"):
                     image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/test/images/{image_file}").suffix
                     image_file_name = image_file[:-len(image_file_suffix)]
@@ -327,15 +327,15 @@ class Ui_MainWindow_function(Ui_MainWindow):
                     count+=1
                     self.progressBar.setProperty("value", count/all_count*100)
                 
-                self.information_update(f"xml_to_txt命令执行完成\n")
+                self.information_update(self.tr("xml_to_txt命令执行完成\n"))
                 self.progressBar.setProperty("value", 100)
             else:
-                self.information_update(f"在创建txt文件前,你需要先添加标注名,用回车隔开\n")
+                self.information_update(self.tr("在创建txt文件前,你需要先添加标注名,用回车隔开\n"))
         else:
-            self.information_update(f"无效的工作目录\n")
+            self.information_update(self.tr("无效的工作目录\n"))
 
     def xml_convert_examine_function(self):
-        self.task_onrunning_textBrowser.setText("进行txt文件转换正确性检验")
+        self.task_onrunning_textBrowser.setText(self.tr("进行txt文件转换正确性检验"))
         self.progressBar.setProperty("value", 0)
         count=0
         all_count=len(os.listdir(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images")+
@@ -347,11 +347,11 @@ class Ui_MainWindow_function(Ui_MainWindow):
         image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.webp'}
 
         if not self.target_adding_textEdit.toPlainText():
-            self.information_update(f"在进行模型检验之前,推荐先添加标注名,用回车隔开\n")
+            self.information_update(self.tr("在进行模型检验之前,推荐先添加标注名,用回车隔开\n"))
         
         if os.path.exists(self.workspace_textEdit.toPlainText()):
 
-            self.information_update(f"开始进行files_waiting_for_classify文件夹内的图片标注检验\n")
+            self.information_update(self.tr("开始进行files_waiting_for_classify文件夹内的图片标注检验\n"))
             for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/files_waiting_for_classify/images"):
                 image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/files_waiting_for_classify/images/{image_file}").suffix
                 image_file_name = image_file[:-len(image_file_suffix)]
@@ -362,12 +362,12 @@ class Ui_MainWindow_function(Ui_MainWindow):
                                 classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines())):
                             break
                     else:
-                        self.information_update(f"{image_file_name}.txt文件不存在\n")
+                        self.information_update(self.tr("{image_file_name}.txt文件不存在\n").format(image_file_name=image_file_name))
                 
                 count+=1
                 self.progressBar.setProperty("value", count/all_count*100)
 
-            self.information_update(f"开始进行train文件夹内的图片标注检验\n")
+            self.information_update(self.tr("开始进行train文件夹内的图片标注检验\n"))
             for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/train/images"):
                 image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/train/images/{image_file}").suffix
                 image_file_name = image_file[:-len(image_file_suffix)]
@@ -378,12 +378,12 @@ class Ui_MainWindow_function(Ui_MainWindow):
                                 classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines())):
                             break
                     else:
-                        self.information_update(f"{image_file_name}.txt文件不存在\n")
+                        self.information_update(self.tr("{image_file_name}.txt文件不存在\n").format(image_file_name=image_file_name))
 
                 count+=1
                 self.progressBar.setProperty("value", count/all_count*100)
 
-            self.information_update(f"开始进行val文件夹内的图片标注检验\n")
+            self.information_update(self.tr("开始进行val文件夹内的图片标注检验\n"))
             for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/val/images"):
                 image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/val/images/{image_file}").suffix
                 image_file_name = image_file[:-len(image_file_suffix)]
@@ -394,12 +394,12 @@ class Ui_MainWindow_function(Ui_MainWindow):
                                 classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines())):
                             break
                     else:
-                        self.information_update(f"{image_file_name}.txt文件不存在\n")
+                        self.information_update(self.tr("{image_file_name}.txt文件不存在\n").format(image_file_name=image_file_name))
 
                 count+=1
                 self.progressBar.setProperty("value", count/all_count*100)
 
-            self.information_update(f"开始进行test文件夹内的图片标注检验\n")
+            self.information_update(self.tr("开始进行test文件夹内的图片标注检验\n"))
             for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/test/images"):
                 image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/test/images/{image_file}").suffix
                 image_file_name = image_file[:-len(image_file_suffix)]
@@ -410,20 +410,20 @@ class Ui_MainWindow_function(Ui_MainWindow):
                                 classnames=list(str(self.target_adding_textEdit.toPlainText()).splitlines())):
                             break
                     else:
-                        self.information_update(f"{image_file_name}.txt文件不存在\n")
+                        self.information_update(self.tr("{image_file_name}.txt文件不存在\n").format(image_file_name=image_file_name))
 
                 count+=1
                 self.progressBar.setProperty("value", count/all_count*100)
             
-            self.information_update(f"标注图片检验命令执行完成\n")
+            self.information_update(self.tr("标注图片检验命令执行完成\n"))
             self.progressBar.setProperty("value", 100)
             cv2.destroyAllWindows()
 
         else:
-            self.information_update(f"无效的工作目录\n")
+            self.information_update(self.tr("无效的工作目录\n"))
 
     def rolabelimg_function(self):
-        self.task_onrunning_textBrowser.setText("打开yolo模型标注软件")
+        self.task_onrunning_textBrowser.setText(self.tr("打开yolo模型标注软件"))
         self.progressBar.setProperty("value", 0)
 
         def rolabelimg_function_threading():
@@ -444,19 +444,19 @@ class Ui_MainWindow_function(Ui_MainWindow):
         self.yolo_train_command_setting_window.show()
 
     def yolo_train_start_function(self):
-        self.task_onrunning_textBrowser.setText("进行yolo模型训练")
+        self.task_onrunning_textBrowser.setText(self.tr("进行yolo模型训练"))
         self.progressBar.setProperty("value", 0)
         self.yolo_train_start_pushButton.setEnabled(False)
-        self.yolo_train_start_pushButton.setText("正在处理......")
+        self.yolo_train_start_pushButton.setText(self.tr("正在处理......"))
 
         cmd=""
 
         if(self.yolo_train_command_setting_ui.train_command_textEdit.toPlainText()):
-            self.task_onrunning_textBrowser.setText("采用高级命令进行训练")
+            self.task_onrunning_textBrowser.setText(self.tr("采用高级命令进行训练"))
             cmd=self.yolo_train_command_setting_ui.train_command_textEdit.toPlainText()
 
         else:
-            self.task_onrunning_textBrowser.setText("采用基础设置进行训练")
+            self.task_onrunning_textBrowser.setText(self.tr("采用基础设置进行训练"))
             cmd = (f"yolo train model={self.yolo_train_basic_setting_ui.train_model_comboBox.currentText()} "+
                     f"data={self.workspace_textEdit.toPlainText()}/dataset.yaml "+
                     f"epochs={self.yolo_train_basic_setting_ui.train_epochs_comboBox.currentText()} "+
@@ -504,7 +504,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
                                 except:
                                     pass
 
-            self.progress_signal.message_updated.emit("yolo模型训练完成")
+            self.progress_signal.message_updated.emit(self.tr("yolo模型训练完成"))
             self.progress_signal.progress_updated.emit(int(100))
             self.progress_signal.train_button_status.emit(True)
             process.poll()
@@ -512,7 +512,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
         threading.Thread(target=yolo_train_start_function_threading, args=(cmd,)).start()
     
     def yolo_test_start_function(self):
-        self.task_onrunning_textBrowser.setText("进行yolo模型检验\n")
+        self.task_onrunning_textBrowser.setText(self.tr("进行yolo模型检验\n"))
         self.progressBar.setProperty("value", 0)
 
         # 支持的图片扩展名
@@ -524,15 +524,15 @@ class Ui_MainWindow_function(Ui_MainWindow):
                 image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/test/images/{image_file}").suffix
                 if(image_file_suffix in image_extensions):
                     results = model(self.workspace_textEdit.toPlainText()+"/test/images/"+image_file)
-                    cv2.imshow("yolo模型检验", results[0].plot())
+                    cv2.imshow(self.tr("yolo模型检验"), results[0].plot())
                     if cv2.waitKey(0) == ord("q"):
                         break
 
-            self.information_update("yolo模型检验结束\n")
+            self.information_update(self.tr("yolo模型检验结束\n"))
             self.progressBar.setProperty("value", 100)
             cv2.destroyAllWindows()
         else:
-            self.information_update("请先将best.pt文件放到工作目录中\n")
+            self.information_update(self.tr("请先将best.pt文件放到工作目录中\n"))
 
 
 
