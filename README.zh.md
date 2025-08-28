@@ -28,39 +28,54 @@ git clone https://github.com/RinST-Dreaming/Yolo-integrated-training-tool.git
   
 训练步骤：  
 1. 在本地创建一个文件夹，这个文件夹也就是你的yolo模型训练工作目录了  
+    ![图片正在加载中](./README_images/zh_CN/work_space_dir.jpg)
 
 2. 在设定工作区的右边点击“浏览”按钮，找到你创建的这个文件夹  
+    ![图片正在加载中](./README_images/zh_CN/browse_button.jpg)
 
 3. 点击“创建工作区下子文件夹”按钮，实现不同功能的文件夹的创建  
-- files_waiting_for_classify：存放你所有的数据集图片和标注文件，并等待随机分配到另外三类文件夹当中
-- train：存放用于yolo的训练数据集
-- val：存放yolo的验证数据集
-- test：存放yolo模型训练完之后用于人工验证的数据集
-  
+    ![图片正在加载中](./README_images/zh_CN/create_work_frame_button.jpg)
+   - files_waiting_for_classify：存放你所有的数据集图片和标注文件，并等待随机分配到另外三类文件夹当中
+   - train：存放用于yolo的训练数据集
+   - val：存放yolo的验证数据集
+   - test：存放yolo模型训练完之后用于人工验证的数据集
+    ![图片正在加载中](./README_images/zh_CN/main_dir_branch.jpg)
+
 4. 将你准备训练的数据集全部拷贝进“files_waiting_for_classify”文件夹当中，按照以下规则分类到“files_waiting_for_classify”文件夹内部的文件夹：
-- images：存放图片数据
-- labels：存放标注的txt文件
-- labels_xml：存放标注的xml文件  
+   - images：存放图片数据
+   - labels：存放标注的txt文件
+   - labels_xml：存放标注的xml文件  
+    ![图片正在加载中](./README_images/zh_CN/sub_dir_branch.jpg)
   
 5. 如果你的图片还没有进行数据标注，点击“rolabelimg”按钮，启动“rolabelimg”标注工具，进行数据集标注，官网与教程如下：[rolabelimg](https://github.com/cgvict/roLabelImg)  
+    ![图片正在加载中](./README_images/zh_CN/rolabelimg_button.jpg)
 
-6. 在右侧找到“添加标注名”窗口，在里面输入你标注的模型名称，每行一个  
+6. 在右侧找到“添加标注名”窗口，在里面输入你标注的模型名称，每行一个 
+    ![图片正在加载中](./README_images/zh_CN/browse_button.jpg)
 
-7. 点击“创建dataset.yaml”按钮创建配置文件  
+7. 点击“创建A.yaml”按钮创建配置文件  
+    ![图片正在加载中](./README_images/zh_CN/create_A.yaml_button.jpg)
 
 8. 点击“将图片随机分类”按钮，将“files_waiting_for_classify”文件夹按照一定比例分配到其它三类文件夹当中（分配比可以在右侧窗口配置）  
-
-9. 点击“xml_to_txt”按钮，将rolabelimg标注的xml文件转换为yolo可以识别的txt文件  
+    ![图片正在加载中](./README_images/zh_CN/randomly_categorize_button.jpg)
+   
+9.  点击“xml_to_txt”按钮，将rolabelimg标注的xml文件转换为yolo可以识别的txt文件  
+    ![图片正在加载中](./README_images/zh_CN/convert_xml_to_txt_button.jpg)
 
 10. （可选）点击“xml_convert_examine”按钮，人工检验标注转换是否正确，按任意键切换下一张，按“q”键退出  
+    ![图片正在加载中](./README_images/zh_CN/convert_examination_button.jpg)
 
 11. 配置yolo训练命令，如果你是刚入门yolo模型训练，推荐点击“yolo训练基本设置”，在里面有已经预设好的一些训练的参数；如果你想要自定义训练命令，可以点击“yolo训练命令高级设置”，该设置内部内容留空的话默认采用“训练基本设置”
+    ![图片正在加载中](./README_images/zh_CN/basic_training_setting_button.jpg)
+    ![图片正在加载中](./README_images/zh_CN/command_training_setting_button.jpg)
 
 12. 点击“启动yolo训练”按钮，等待训练完成
+    ![图片正在加载中](./README_images/zh_CN/start_yolo_training_button.jpg)
 
 ------等待训练结束，到这里就恭喜你成功完成一个yolo模型训练啦------
 
-13. （可选）将训练得到的“best.pt”文件拷贝到你的工作目录中，点击“启动yolo训练成果检验”按钮，人工检验模型的训练效果
+13.  （可选）将训练得到的“best.pt”文件拷贝到你的工作目录中，点击“启动yolo训练成果检验”按钮，人工检验模型的训练效果
+    ![图片正在加载中](./README_images/zh_CN/start_yolo_validation_button.jpg)
 
 
 # 致谢与版权声明  
