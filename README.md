@@ -82,4 +82,5 @@ Training steps:
     ![图片正在加载中](./README_images/en/start_yolo_validation_button.jpg)
 
 # Acknowledgements and Copyright Statement
-This project uses [rolabelimg](https://github.com/cgvict/roLabelImg)The tool is developed by [cgvit and wkkmike] and follows the [MIT License] license. 
+This project uses [rolabelimg](https://github.com/cgvict/roLabelImg). The tool is developed by [cgvit and wkkmike] and follows the [MIT License] license.   
+Due to the lack of updates for the Rolabelimg project for a long time, we have created a fork of this project [Rolabelimg-fix](https://github.com/RinST-Dreaming/roLabelImg-fix) to continue to maintain and update it, and apply it to the project in practice. Thank you again to the open source workers of Rolabelimg.

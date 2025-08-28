@@ -439,7 +439,7 @@ class Ui_MainWindow_function(Ui_trainslation):
             current_file = sys.argv[0]
             # 获取文件所在目录
             current_dir = os.path.dirname(current_file)
-            cmd=f"{sys.executable} {current_dir}/tools/roLabelImg-master/roLabelImg.py"
+            cmd=f"{sys.executable} {current_dir}/tools/roLabelImg-fix/roLabelImg.py"
             subprocess.run(cmd, shell=True)
 
         threading.Thread(target=rolabelimg_function_threading).start()

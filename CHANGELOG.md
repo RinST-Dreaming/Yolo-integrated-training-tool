@@ -1,5 +1,11 @@
-# 更新日志：  
+# 更新日志： 
+## 2025.08.29-Ver1.0.2
+### RinST-Dreaming:
+将shenfix制作的icon图标整合进主界面以及两个小窗口之中
+由于rolabelimg长时间没有更新，fork了一份rolabelimg的仓库，对里面存在的对一些图片在标注时可能出现的浮点型报错进行修复，并命名为rolabelimg-fix加入tools文件夹中
+
 ## 2025.08.29-Ver1.0.1
+### RinST-Dreaming:
 删去了main_menu_funtion中重复的代码  
 
 ## 2025.08.28-Ver1.0.1
