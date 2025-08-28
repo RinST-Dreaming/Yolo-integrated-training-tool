@@ -8,11 +8,10 @@ import subprocess
 import random
 import os
 import threading
-import stat
 
-from ui_interface.main_menu import Ui_MainWindow
 from ui_function.yolo_train_basic_setting_function import Ui_yolo_train_basic_setting_Form_function
 from ui_function.yolo_train_command_setting_function import Ui_yolo_train_command_setting_Form_function
+from ui_function.translation import Ui_trainslation
 from tools import xml_to_txt
 from tools import xml_convert_examine
 
@@ -22,7 +21,7 @@ class ProgressSignal(QtCore.QObject):
     train_button_status = QtCore.pyqtSignal(bool)
     
 
-class Ui_MainWindow_function(Ui_MainWindow):
+class Ui_MainWindow_function(Ui_trainslation):
     #-------------------------------------初始化配置---------------------------------------------------
     def setupfunction(self, MainWindow):
         self.MainWindow = MainWindow
@@ -48,6 +47,8 @@ class Ui_MainWindow_function(Ui_MainWindow):
         self.yolo_train_command_setting_ui.setupUi(self.yolo_train_command_setting_window)
         self.yolo_train_command_setting_ui.setupfunction(self.yolo_train_command_setting_window)
 
+        self.setup_translation()
+
         self.yolo_train_cmd=self.yolo_train_command_setting_ui.train_command_textEdit.toPlainText()
 
         self.progress_signal = ProgressSignal()
@@ -55,16 +56,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
         self.progress_signal.progress_updated.connect(self.progress_update)
         self.progress_signal.train_button_status.connect(self.train_button_status_update)
 
-        self.ui_translator=Ui_MainWindow()
-        self.actionEnglish.triggered.connect(lambda: self.load_translation("en"))
-        self.actionChinese.triggered.connect(lambda: self.load_translation("zh_CN"))
-        # 初始化翻译器
-        self.translator = QtCore.QTranslator()
-        self.current_language = "zh_CN"  # 默认中文
         
-        # 初始化时加载默认翻译
-        self.load_translation(self.current_language)
-
     #-------------------------------------信号配置---------------------------------------------------
     def information_update(self,information):
         self.information_textBrowser.moveCursor(QtGui.QTextCursor.End)
@@ -91,94 +83,7 @@ class Ui_MainWindow_function(Ui_MainWindow):
         self.yolo_train_start_pushButton.setEnabled(status)
         self.yolo_train_start_pushButton.setText("yolo模型训练完成(√)")
 
-    #-------------------------------------翻译功能配置---------------------------------------------------
-    def load_translation(self, language_code):
-        """加载指定语言的翻译文件"""
-        # 移除旧的翻译
-        QtWidgets.QApplication.removeTranslator(self.translator)
-        
-        # 获取文件所在目录
-        file_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
-        translation_dir = os.path.join(file_dir, 'translations')
-        
-        # 确保翻译目录存在
-        if not os.path.exists(translation_dir):
-            self.information_update("翻译目录不存在！\n")
-            return
-        
-        if language_code == "zh_CN":
-            translation_file = 'zh_CN.qm'
-        else:  # English
-            translation_file = 'en.qm'
-
-        # 完整的文件路径
-        full_path = os.path.join(translation_dir, translation_file)
-        
-        # 加载翻译文件
-        if self.translator.load(full_path):
-            QtWidgets.QApplication.installTranslator(self.translator)
-            self.current_language = language_code
-            self.information_update(f"已加载 {language_code} 翻译文件\n")
-            
-            # 重新翻译界面
-            self.retranslate_ui()
-            return True
-        else:
-            self.information_update(f"无法加载 {language_code} 翻译文件\n")
-            return False
     
-    def retranslate_ui(self):
-        """重新翻译界面"""
-        # 保存当前状态
-        current_states = {}
-        
-        # 保存文本输入框内容
-        text_edits = self.MainWindow.findChildren(QtWidgets.QTextEdit)
-        for i, text_edit in enumerate(text_edits):
-            current_states[f'text_edit_{i}'] = text_edit.toPlainText()
-        
-        # 保存复选框状态
-        check_boxes = self.MainWindow.findChildren(QtWidgets.QCheckBox)
-        for i, check_box in enumerate(check_boxes):
-            current_states[f'check_box_{i}'] = check_box.isChecked()
-        
-        # 保存下拉框状态
-        combo_boxes = self.MainWindow.findChildren(QtWidgets.QComboBox)
-        for i, combo_box in enumerate(combo_boxes):
-            current_states[f'combo_box_{i}'] = combo_box.currentIndex()
-        
-        # 保存spinbox状态
-        spin_boxes = self.MainWindow.findChildren(QtWidgets.QSpinBox)
-        for i, spin_box in enumerate(spin_boxes):
-            current_states[f'spin_box_{i}'] = spin_box.value()
-        
-        # 重新调用父类的retranslateUi方法
-        super().retranslateUi(self.MainWindow)
-        
-        # 恢复状态
-        # 恢复文本输入框内容
-        text_edits = self.MainWindow.findChildren(QtWidgets.QTextEdit)
-        for i, text_edit in enumerate(text_edits):
-            if f'text_edit_{i}' in current_states:
-                text_edit.setPlainText(current_states[f'text_edit_{i}'])
-        
-        # 恢复复选框状态
-        check_boxes = self.MainWindow.findChildren(QtWidgets.QCheckBox)
-        for i, check_box in enumerate(check_boxes):
-            if f'check_box_{i}' in current_states:
-                check_box.setChecked(current_states[f'check_box_{i}'])
-        
-        # 恢复下拉框状态
-        combo_boxes = self.MainWindow.findChildren(QtWidgets.QComboBox)
-        for i, combo_box in enumerate(combo_boxes):
-            if f'combo_box_{i}' in current_states:
-                combo_box.setCurrentIndex(current_states[f'combo_box_{i}'])
-        
-        # 恢复spinbox状态
-        spin_boxes = self.MainWindow.findChildren(QtWidgets.QSpinBox)
-        for i, spin_box in enumerate(spin_boxes):
-            if f'spin_box_{i}' in current_states:
-                spin_box.setValue(current_states[f'spin_box_{i}'])
 
     #-------------------------------------主要功能配置---------------------------------------------------
     def browse_workspace_directory_function(self):
