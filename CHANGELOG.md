@@ -1,4 +1,7 @@
 # 更新日志：  
+## 2025.08.29-Ver1.0.1
+删去了main_menu_funtion中重复的代码  
+
 ## 2025.08.28-Ver1.0.1
 ### RinST-Dreaming:
 将一部分翻译的代码从main_menu_function.py移植到traslation.py中方便对翻译功能进行单独的管理  
