@@ -1,4 +1,4 @@
-# Yolo-integrated-training-tool：Ver-1.0.1  
+# Yolo-integrated-training-tool：Ver-1.0.2  
   
 ## Introduction
 This is a Yolo integrated training tool, because when I usually use YOLO for training, I often encounter problems such as labeling, file conversion, setting configuration files, setting sample allocation ratios, and verifying various training tasks and results. Due to the scattered nature of each tool, I wanted to write an ensemble tool to facilitate the quick construction of the YOLO training workspace
