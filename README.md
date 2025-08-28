@@ -1,4 +1,4 @@
-# Yolo-integrated-training-tool：Ver-1.0.1  
+# Yolo-integrated-training-tool：Ver-1.0.2  
   
 ## Introduction
 This is a Yolo integrated training tool, because when I usually use YOLO for training, I often encounter problems such as labeling, file conversion, setting configuration files, setting sample allocation ratios, and verifying various training tasks and results. Due to the scattered nature of each tool, I wanted to write an ensemble tool to facilitate the quick construction of the YOLO training workspace
@@ -82,4 +82,5 @@ Training steps:
     ![图片正在加载中](./README_images/en/start_yolo_validation_button.jpg)
 
 # Acknowledgements and Copyright Statement
-This project uses [rolabelimg](https://github.com/cgvict/roLabelImg)The tool is developed by [cgvit and wkkmike] and follows the [MIT License] license. 
+This project uses [rolabelimg](https://github.com/cgvict/roLabelImg). The tool is developed by [cgvit and wkkmike] and follows the [MIT License] license.   
+Due to the lack of updates for the Rolabelimg project for a long time, we have created a fork of this project [Rolabelimg-fix](https://github.com/RinST-Dreaming/roLabelImg-fix) to continue to maintain and update it, and apply it to the project in practice. Thank you again to the open source workers of Rolabelimg.

@@ -70,21 +70,6 @@ class Ui_MainWindow_function(Ui_trainslation):
         self.yolo_train_start_pushButton.setEnabled(status)
         self.yolo_train_start_pushButton.setText("yolo模型训练完成(√)")
 
-#-------------------------------------信号配置---------------------------------------------------
-    def information_update(self,information):
-        self.information_textBrowser.moveCursor(QtGui.QTextCursor.End)
-        self.information_textBrowser.insertPlainText(information)
-        self.information_textBrowser.ensureCursorVisible()
-
-    def progress_update(self,progress):
-        self.progressBar.setProperty("value", progress)
-
-    def train_button_status_update(self,status):
-        self.yolo_train_start_pushButton.setEnabled(status)
-        self.yolo_train_start_pushButton.setText("yolo模型训练完成(√)")
-
-    
-
     #-------------------------------------主要功能配置---------------------------------------------------
     def browse_workspace_directory_function(self):
         self.task_onrunning_textBrowser.setText("设置工作区路径")
@@ -454,7 +439,7 @@ class Ui_MainWindow_function(Ui_trainslation):
             current_file = sys.argv[0]
             # 获取文件所在目录
             current_dir = os.path.dirname(current_file)
-            cmd=f"{sys.executable} {current_dir}/tools/roLabelImg-master/roLabelImg.py"
+            cmd=f"{sys.executable} {current_dir}/tools/roLabelImg-fix/roLabelImg.py"
             subprocess.run(cmd, shell=True)
 
         threading.Thread(target=rolabelimg_function_threading).start()

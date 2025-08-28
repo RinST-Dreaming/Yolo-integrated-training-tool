@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../resource.qrc">
-    <normaloff>:/icon/icon/logo.ico</normaloff>:/icon/icon/logo.ico</iconset>
+    <normaloff>:/icon/icon/ITTO.ico</normaloff>:/icon/icon/ITTO.ico</iconset>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>false</bool>

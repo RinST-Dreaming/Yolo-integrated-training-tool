@@ -1,4 +1,4 @@
-# YOLO神经网络集成训练工具：Ver-1.0.1  
+# YOLO神经网络集成训练工具：Ver-1.0.2  
   
 ## 简介  
 这是一个yolo神经网络集成训练工具，因为自己平常用yolo进行训练时总是会遇见一些标注、文件转换、设置配置文件、设置样本分配比例以及各种不同的训练任务与训练成果验证的问题，由于各个工具过于分散了，所以想着写一个集成的工具便于快速完成yolo训练工作区的搭建  
@@ -80,3 +80,4 @@ git clone https://github.com/RinST-Dreaming/Yolo-integrated-training-tool.git
 
 # 致谢与版权声明  
 本项目使用了 [rolabelimg](https://github.com/cgvict/roLabelImg) 工具，该工具由 [cgvict 和 wkkmike] 开发，遵循 [MIT License] 许可证。  
+由于rolabelimg项目长时间没有进行更新，我们创建了该项目的一个分叉[rolabelimg-fix](https://github.com/RinST-Dreaming/roLabelImg-fix)，对其继续进行维护与更新，并实际运用到该项目当中。再次对rolabelimg开源工作者表示感谢。

@@ -15,6 +15,9 @@ class Ui_yolo_train_basic_setting_Form(object):
     def setupUi(self, yolo_train_basic_setting_Form):
         yolo_train_basic_setting_Form.setObjectName("yolo_train_basic_setting_Form")
         yolo_train_basic_setting_Form.resize(224, 260)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icon/icon/ITTO.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        yolo_train_basic_setting_Form.setWindowIcon(icon)
         self.train_modellabel = QtWidgets.QLabel(yolo_train_basic_setting_Form)
         self.train_modellabel.setGeometry(QtCore.QRect(20, 20, 71, 16))
         self.train_modellabel.setObjectName("train_modellabel")
@@ -116,12 +119,11 @@ class Ui_yolo_train_basic_setting_Form(object):
         self.train_task_comboBox.setItemText(0, _translate("yolo_train_basic_setting_Form", "detect"))
         self.train_task_comboBox.setItemText(1, _translate("yolo_train_basic_setting_Form", "classify"))
         self.train_task_comboBox.setItemText(2, _translate("yolo_train_basic_setting_Form", "track"))
+import resource_rc
 
 
 if __name__ == "__main__":
     import sys
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
     app = QtWidgets.QApplication(sys.argv)
     yolo_train_basic_setting_Form = QtWidgets.QWidget()
     ui = Ui_yolo_train_basic_setting_Form()

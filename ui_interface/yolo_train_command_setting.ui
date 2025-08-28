@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>yolo训练命令设置</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../resource.qrc">
+    <normaloff>:/icon/icon/ITTO.ico</normaloff>:/icon/icon/ITTO.ico</iconset>
+  </property>
   <widget class="QLabel" name="train_command_label">
    <property name="geometry">
     <rect>
@@ -63,6 +67,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

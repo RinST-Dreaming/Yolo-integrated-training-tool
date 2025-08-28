@@ -15,6 +15,9 @@ class Ui_yolo_train_command_setting_Form(object):
     def setupUi(self, yolo_train_command_setting_Form):
         yolo_train_command_setting_Form.setObjectName("yolo_train_command_setting_Form")
         yolo_train_command_setting_Form.resize(401, 131)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icon/icon/ITTO.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        yolo_train_command_setting_Form.setWindowIcon(icon)
         self.train_command_label = QtWidgets.QLabel(yolo_train_command_setting_Form)
         self.train_command_label.setGeometry(QtCore.QRect(20, 20, 61, 16))
         self.train_command_label.setObjectName("train_command_label")
@@ -37,6 +40,7 @@ class Ui_yolo_train_command_setting_Form(object):
         self.train_command_label.setText(_translate("yolo_train_command_setting_Form", "训练命令："))
         self.confirm_pushButton.setText(_translate("yolo_train_command_setting_Form", "确定"))
         self.cancel_pushButton.setText(_translate("yolo_train_command_setting_Form", "取消"))
+import resource_rc
 
 
 if __name__ == "__main__":
