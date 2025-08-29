@@ -1,4 +1,8 @@
 # 更新日志： 
+## 2025.08.29-Ver1.0.3
+### RinST-Dreaming:
+在[rolabelimg_commits](https://github.com/cgvict/roLabelImg/pull/37)里面找到了更好的浮点问题解决方式，并更新到了这个版本里面
+
 ## 2025.08.29-Ver1.0.2
 ### RinST-Dreaming:
 将shenfix制作的icon图标整合进主界面以及两个小窗口之中

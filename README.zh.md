@@ -80,4 +80,5 @@ git clone https://github.com/RinST-Dreaming/Yolo-integrated-training-tool.git
 
 # 致谢与版权声明  
 本项目使用了 [rolabelimg](https://github.com/cgvict/roLabelImg) 工具，该工具由 [cgvict 和 wkkmike] 开发，遵循 [MIT License] 许可证。  
-由于rolabelimg项目长时间没有进行更新，我们创建了该项目的一个分叉[rolabelimg-fix](https://github.com/RinST-Dreaming/roLabelImg-fix)，对其继续进行维护与更新，并实际运用到该项目当中。再次对rolabelimg开源工作者表示感谢。
+由于rolabelimg项目长时间没有进行更新，我们创建了该项目的一个分叉[rolabelimg-fix](https://github.com/RinST-Dreaming/roLabelImg-fix)，对其继续进行维护与更新，并实际运用到该项目当中。再次对rolabelimg开源工作者表示感谢。  
+感谢[rolabelimg_commits](https://github.com/cgvict/roLabelImg/pull/37)提供了更好的rolabelimg关于浮点型问题的报错解决思路
