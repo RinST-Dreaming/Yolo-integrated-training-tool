@@ -1,4 +1,8 @@
 # 更新日志： 
+## 2025.09.01-Ver1.0.3
+### RinST-Dreaming:
+新增存在标签错误(class=-1)的图片输出到终端当中便于查找修复的功能
+
 ## 2025.08.29-Ver1.0.3
 ### RinST-Dreaming:
 在[rolabelimg_commits](https://github.com/cgvict/roLabelImg/pull/37)里面找到了更好的浮点问题解决方式，并更新到了这个版本里面

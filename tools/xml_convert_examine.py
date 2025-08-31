@@ -11,6 +11,7 @@ def function(pic_path,txt_path,classnames):
     with open(txt_path, 'r') as f:
         lines = f.readlines()
     
+
     # 绘制每个标注
     for line in lines:
         parts = line.strip().split()
@@ -39,7 +40,11 @@ def function(pic_path,txt_path,classnames):
                 cv2.circle(image, point, 3, (0, 0, 255), -1)
             
             # 添加类别标签
-            class_name = classnames[class_id] if(class_id < len(classnames) and class_id>=0) else f"Class_{class_id}"
+            if(class_id < len(classnames) and class_id>=0):
+                class_name = classnames[class_id]
+            else:
+                class_name = f"Class_{class_id}"
+                print("存在未标注图片:",pic_path)
             cv2.putText(image, class_name, pixel_points[0], 
                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
     
