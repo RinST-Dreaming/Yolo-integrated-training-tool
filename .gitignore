@@ -1,5 +1,8 @@
 test_wk_area/
 __pycache__/
+build/
+dist/
+itto_yolo_tool.egg-info/
 runs/
 yolov8n.pt
 yolov8n-obb.pt

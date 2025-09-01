@@ -1,4 +1,13 @@
 # 更新日志： 
+## 2025.09.01-Ver2.0.0
+### 从本次更新之后该软件发布到pypi平台上并可以通过pip进行安装
+### RinST-Dreaming:
+对整体文件结构进行大改，主要代码移入itto_yolo_tool文件夹中  
+修复了rolabelimg工具无法正常下载的问题  
+删除了rolabelimg-fix的demo文件夹减少文件占用  
+将translation.py文件移入translations文件夹中  
+增加了setup.py的包安装方式  
+
 ## 2025.09.01-Ver1.0.3
 ### RinST-Dreaming:
 新增存在标签错误(class=-1)的图片输出到终端当中便于查找修复的功能

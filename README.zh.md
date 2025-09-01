@@ -12,13 +12,32 @@ pytorch
 ultralytics  
 PyQt5
 ### 安装
-方法一：采用git克隆  
+方法一：使用pip安装
+使用命令：
+```cmd
+pip install itto-yolo-tool
+```
+启动应用:
+```cmd
+itto
+```
+
+方法二：采用git克隆  
 windows/linux/mac 输入以下命令：
 ```cmd
 git clone https://github.com/RinST-Dreaming/Yolo-integrated-training-tool.git
 ```  
-  
-方法二：直接从main页面下载源代码.zip文件
+或者直接从main页面下载源代码.zip文件
+
+在目录下运行以下命令:
+```cmd
+python setup.py install
+``` 
+
+启动应用:
+```cmd
+itto
+```
 
 ### 使用方法
 在使用之前，请确保你已经配置好了yolo训练环境！！！

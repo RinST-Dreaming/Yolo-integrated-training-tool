@@ -16,14 +16,33 @@ PyQt5
 
 ### Installation
 
-Method 1: Use Git cloning
+Method 1: Install using pip
+Use command:
+```cmd
+pip install itto-yolo-tool
+```
+Launch the application:
+```cmd
+itto
+```
 
-Windows/Linux/Mac: Enter the following command:  
+Method 2: Use Git cloning
+Windows/Linux/Mac: Enter the following command:
 ```cmd
 git clone  https://github.com/RinST-Dreaming/Yolo-integrated-training-tool.git
 ```  
-  
-Method 2: Download the source code. zip file directly from the main page
+Alternatively, you can directly download the source code. zip file from the main page
+
+Run the following command in the directory:
+```cmd
+python setup.py install
+``` 
+
+Launch the application:
+```cmd
+itto
+```
+
 ### Usage method
 Before use, please ensure that you have configured the YOLO training environment!!!
 

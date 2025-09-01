@@ -1,0 +1,6 @@
+include itto_yolo_tool/resource_rc.py
+include itto_yolo_tool/ui_interface/*.py
+include itto_yolo_tool/ui_function/*.py
+include itto_yolo_tool/tools/*.py
+include itto_yolo_tool/translations/*.qm
+graft itto_yolo_tool/tools/rolabelimg-fix
