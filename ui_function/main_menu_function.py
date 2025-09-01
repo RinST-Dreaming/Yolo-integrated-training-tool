@@ -8,6 +8,7 @@ import subprocess
 import random
 import os
 import threading
+import re
 
 from ui_function.yolo_train_basic_setting_function import Ui_yolo_train_basic_setting_Form_function
 from ui_function.yolo_train_command_setting_function import Ui_yolo_train_command_setting_Form_function
@@ -470,10 +471,14 @@ class Ui_MainWindow_function(Ui_trainslation):
                     f"epochs={self.yolo_train_basic_setting_ui.train_epochs_comboBox.currentText()} "+
                     f"patience={self.yolo_train_basic_setting_ui.train_patience_comboBox.currentText()} "+
                     f"device={self.yolo_train_basic_setting_ui.train_device_comboBox.currentText()} "+
-                    f"task={self.yolo_train_basic_setting_ui.train_task_comboBox.currentText()} "
+                    f"task={self.yolo_train_basic_setting_ui.train_task_comboBox.currentText()} "+
+                    f"project={self.workspace_textEdit.toPlainText()}/runs"
                     )
             
         def yolo_train_start_function_threading(cmd):
+            count = 1
+            ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+            
             # 启动子进程并捕获输出
             process = subprocess.Popen(
                 cmd,
@@ -489,7 +494,7 @@ class Ui_MainWindow_function(Ui_trainslation):
             training_start = False
             while True:
                 output = process.stdout.readline()
-                self.progress_signal.message_updated.emit(output)
+                self.progress_signal.message_updated.emit(ansi_escape.sub('', output))
                 print(output)
 
                 if output == '' and process.poll() is not None:
@@ -501,18 +506,20 @@ class Ui_MainWindow_function(Ui_trainslation):
 
                     if "/" in output and training_start:
                         parts = output.split()
-                        for part in parts:
+                        for part in parts[0:1]:
                             if "/" in part:
                                 try:
                                     current, total = part.split("/")
-                                    progress = int(current) / int(total) * 100
-                                    if(progress!=100):
-                                        self.progress_signal.progress_updated.emit(int(progress))
+                                    if int(current) == count:
+                                        count += 1
+                                        progress = int(current) / int(total) * 100
+                                        if(progress!=100):
+                                            self.progress_signal.progress_updated.emit(int(progress))
                                     break
                                 except:
                                     pass
 
-            self.progress_signal.message_updated.emit("yolo模型训练完成")
+            self.progress_signal.message_updated.emit(f"yolo模型训练完成,总回合数:{count-1}")
             self.progress_signal.progress_updated.emit(int(100))
             self.progress_signal.train_button_status.emit(True)
             process.poll()
