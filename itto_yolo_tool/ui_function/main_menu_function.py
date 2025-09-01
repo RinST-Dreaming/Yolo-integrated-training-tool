@@ -1,6 +1,5 @@
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
-from ultralytics import YOLO
 from pathlib import Path
 import sys
 import cv2
@@ -535,18 +534,22 @@ class Ui_MainWindow_function(Ui_trainslation):
         image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.webp'}
 
         if os.path.exists(self.workspace_textEdit.toPlainText()+"/best.pt"):
-            model=YOLO(self.workspace_textEdit.toPlainText()+"/best.pt")
-            for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/test/images"):
-                image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/test/images/{image_file}").suffix
-                if(image_file_suffix in image_extensions):
-                    results = model(self.workspace_textEdit.toPlainText()+"/test/images/"+image_file)
-                    cv2.imshow("yolo模型检验", results[0].plot())
-                    if cv2.waitKey(0) == ord("q"):
-                        break
+            try:
+                from ultralytics import YOLO
+                model=YOLO(self.workspace_textEdit.toPlainText()+"/best.pt")
+                for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/test/images"):
+                    image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/test/images/{image_file}").suffix
+                    if(image_file_suffix in image_extensions):
+                        results = model(self.workspace_textEdit.toPlainText()+"/test/images/"+image_file)
+                        cv2.imshow("yolo模型检验", results[0].plot())
+                        if cv2.waitKey(0) == ord("q"):
+                            break
 
-            self.information_update("yolo模型检验结束\n")
-            self.progressBar.setProperty("value", 100)
-            cv2.destroyAllWindows()
+                self.information_update("yolo模型检验结束\n")
+                self.progressBar.setProperty("value", 100)
+                cv2.destroyAllWindows()
+            except ImportError:
+                self.information_update("检测到YOLO没有安装,请先配置好YOLO再使用训练与检测功能")
         else:
             self.information_update("请先将best.pt文件放到工作目录中\n")
 
