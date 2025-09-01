@@ -1,4 +1,4 @@
-# YOLO神经网络集成训练工具：Ver-1.0.3  
+# YOLO神经网络集成训练工具:Ver-2.0.1  
   
 ## 简介  
 这是一个yolo神经网络集成训练工具，因为自己平常用yolo进行训练时总是会遇见一些标注、文件转换、设置配置文件、设置样本分配比例以及各种不同的训练任务与训练成果验证的问题，由于各个工具过于分散了，所以想着写一个集成的工具便于快速完成yolo训练工作区的搭建  
@@ -12,13 +12,32 @@ pytorch
 ultralytics  
 PyQt5
 ### 安装
-方法一：采用git克隆  
+方法一：使用pip安装
+使用命令：
+```cmd
+pip install itto-yolo-tool
+```
+启动应用:
+```cmd
+itto
+```
+
+方法二：采用git克隆  
 windows/linux/mac 输入以下命令：
 ```cmd
 git clone https://github.com/RinST-Dreaming/Yolo-integrated-training-tool.git
 ```  
-  
-方法二：直接从main页面下载源代码.zip文件
+或者直接从main页面下载源代码.zip文件
+
+在目录下运行以下命令:
+```cmd
+python setup.py install
+``` 
+
+启动应用:
+```cmd
+itto
+```
 
 ### 使用方法
 在使用之前，请确保你已经配置好了yolo训练环境！！！
