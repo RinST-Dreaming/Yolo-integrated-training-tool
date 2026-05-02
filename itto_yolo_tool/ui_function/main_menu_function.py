@@ -447,6 +447,17 @@ class Ui_MainWindow_function(Ui_trainslation):
         self.progressBar.setProperty("value", 100)
 
     def Ui_yolo_train_basic_setting_function(self):
+        cmd = (f"yolo train model={self.yolo_train_basic_setting_ui.train_model_comboBox.currentText()} "+
+                    f"data={self.workspace_textEdit.toPlainText()}/dataset.yaml "+
+                    f"epochs={self.yolo_train_basic_setting_ui.train_epochs_comboBox.currentText()} "+
+                    f"patience={self.yolo_train_basic_setting_ui.train_patience_comboBox.currentText()} "+
+                    f"device={self.yolo_train_basic_setting_ui.train_device_comboBox.currentText()} "+
+                    f"task={self.yolo_train_basic_setting_ui.train_task_comboBox.currentText()} "+
+                    f"imgsz={self.yolo_train_basic_setting_ui.imgsz_comboBox.currentText()} "+
+                    f"project={self.workspace_textEdit.toPlainText()}/runs"
+                    )
+        self.yolo_train_basic_setting_ui.command_textBrowser.setText(cmd)
+
         self.yolo_train_basic_setting_window.show()
 
     def Ui_yolo_train_command_setting_function(self):
@@ -472,6 +483,7 @@ class Ui_MainWindow_function(Ui_trainslation):
                     f"patience={self.yolo_train_basic_setting_ui.train_patience_comboBox.currentText()} "+
                     f"device={self.yolo_train_basic_setting_ui.train_device_comboBox.currentText()} "+
                     f"task={self.yolo_train_basic_setting_ui.train_task_comboBox.currentText()} "+
+                    f"imgsz={self.yolo_train_basic_setting_ui.imgsz_comboBox.currentText()} "+
                     f"project={self.workspace_textEdit.toPlainText()}/runs"
                     )
             
@@ -540,7 +552,7 @@ class Ui_MainWindow_function(Ui_trainslation):
                 for image_file in os.listdir(self.workspace_textEdit.toPlainText()+"/test/images"):
                     image_file_suffix = Path(self.workspace_textEdit.toPlainText()+f"/test/images/{image_file}").suffix
                     if(image_file_suffix in image_extensions):
-                        results = model(self.workspace_textEdit.toPlainText()+"/test/images/"+image_file)
+                        results = model(self.workspace_textEdit.toPlainText()+"/test/images/"+image_file, imgsz=self.yolo_train_basic_setting_ui.imgsz_comboBox.currentText())
                         cv2.imshow("yolo模型检验", results[0].plot())
                         if cv2.waitKey(0) == ord("q"):
                             break

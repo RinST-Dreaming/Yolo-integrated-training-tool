@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>224</width>
-    <height>260</height>
+    <width>225</width>
+    <height>285</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>yolo训练基本设置</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../resource.qrc">
+   <iconset>
     <normaloff>:/icon/icon/ITTO.ico</normaloff>:/icon/icon/ITTO.ico</iconset>
   </property>
   <widget class="QLabel" name="train_modellabel">
@@ -225,7 +225,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>190</y>
+     <y>200</y>
      <width>51</width>
      <height>21</height>
     </rect>
@@ -238,7 +238,7 @@
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>190</y>
+     <y>200</y>
      <width>51</width>
      <height>21</height>
     </rect>
@@ -287,6 +287,63 @@
      <string>track</string>
     </property>
    </item>
+  </widget>
+  <widget class="QComboBox" name="imgsz_comboBox">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>170</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="editable">
+    <bool>true</bool>
+   </property>
+   <property name="currentText">
+    <string>640</string>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <item>
+    <property name="text">
+     <string>640</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>1280</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>1920</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="imgsz_label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>170</y>
+     <width>54</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>imgsz：</string>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="command_textBrowser">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>230</y>
+     <width>191</width>
+     <height>41</height>
+    </rect>
+   </property>
   </widget>
  </widget>
  <resources>
