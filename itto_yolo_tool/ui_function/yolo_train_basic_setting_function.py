@@ -10,6 +10,7 @@ class Ui_yolo_train_basic_setting_Form_function(Ui_yolo_train_basic_setting_Form
         self.train_patience_comboBox_bq = self.train_patience_comboBox.currentText()
         self.train_device_comboBox_bq = self.train_device_comboBox.currentText()
         self.train_task_comboBox_bq = self.train_task_comboBox.currentText()
+        self.imgsz_comboBox_bq = self.imgsz_comboBox.currentText()
 
         self.confirm_pushButton.clicked.connect(self.confirm_function)
         self.cancel_pushButton.clicked.connect(self.cancel_function)
@@ -20,6 +21,7 @@ class Ui_yolo_train_basic_setting_Form_function(Ui_yolo_train_basic_setting_Form
         self.train_patience_comboBox_bq = self.train_patience_comboBox.currentText()
         self.train_device_comboBox_bq = self.train_device_comboBox.currentText()
         self.train_task_comboBox_bq = self.train_task_comboBox.currentText()
+        self.imgsz_comboBox_bq = self.imgsz_comboBox.currentText()
 
         self.yolo_train_basic_setting_QWidget.close()
 
@@ -29,6 +31,7 @@ class Ui_yolo_train_basic_setting_Form_function(Ui_yolo_train_basic_setting_Form
         self.train_patience_comboBox.setCurrentText(self.train_patience_comboBox_bq)
         self.train_device_comboBox.setCurrentText(self.train_device_comboBox_bq)
         self.train_task_comboBox.setCurrentText(self.train_task_comboBox_bq)
+        self.imgsz_comboBox.setCurrentText(self.imgsz_comboBox_bq)
         
         self.yolo_train_basic_setting_QWidget.close()
 
